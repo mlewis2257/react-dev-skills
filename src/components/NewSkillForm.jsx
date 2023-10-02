@@ -2,39 +2,46 @@ import React from "react";
 import { useState } from "react";
 import "./NewSkillForm.css";
 
-const NewSkillForm = () => {
-  const [name, setName] = useState("");
-  const [level, setLevel] = useState(3);
-  const [skills, setSkills] = useState([]);
+const NewSkillForm = ({ addSkill }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    level: 3,
+  });
 
   const handleChange = (evt) => {
-    evt.preventDefault();
-    setName(evt.target.value);
-  };
-
-  const levelChange = (evt) => {
-    evt.preventDefault();
-    setLevel(evt.target.value);
+    const { name, value } = evt.target.value;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
   };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
-    const newSkill = {
-      name,
-      level: parseInt(level),
-    };
-
-    setSkills([...skills, newSkill]);
-    setName("");
-    setLevel(3);
+    addSkill(formData);
+    setFormData({
+      name: "",
+      level: 3,
+    });
   };
   return (
     <form action="" className="NewSkillForm" onSubmit={handleSubmit}>
       <label htmlFor="">Skill</label>
-      <input type="text" id="skill" value={name} onChange={handleChange} />
+      <input
+        type="text"
+        id="skill"
+        name="name"
+        value={formData.name}
+        onChange={handleChange}
+        placeholder="Type New Skill"
+      />
       <label htmlFor="">Level</label>
-      <select name={level} id="level" onChange={levelChange}>
+      <select
+        name="level"
+        value={formData.level}
+        id="level"
+        onChange={handleChange}
+      >
         <option value={1}>1</option>
         <option value={2}>2</option>
         <option value={3}>3</option>
