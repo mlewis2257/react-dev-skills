@@ -9,7 +9,8 @@ const NewSkillForm = ({ addSkill }) => {
   });
 
   const handleChange = (evt) => {
-    const { name, value } = evt.target.value;
+    evt.preventDefault();
+    const { name, value } = evt.target;
     setFormData({
       ...formData,
       [name]: value,
